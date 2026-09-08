@@ -1,6 +1,6 @@
 # HDD-OSD Icon Generator for PlayStation 2
 ## Introduction
-This is the **HDD-OSD Icon Generator** for the **[HDD-OSD Icon Database](https://github.com/CosmicScale/HDD-OSD-Icon-Database)**. The **[PSBBN Definitive Project](https://github.com/CosmicScale/PSBBN-Definitive-English-Patch)** automatically creates HDD-OSD icons for display in Browser 2.0. However, icons can only be automatically created if sufficient assets are available in the OPL Manager Art Database. This icon generator allows you to create your own HDD-OSD icons by manually supplying the required images.
+This is the **HDD-OSD Icon Generator** for the **[HDD-OSD Icon Database](https://github.com/CosmicScale/HDD-OSD-Icon-Database)**. The **[PSBBN Definitive Project](https://github.com/CosmicScale/PSBBN-Definitive-Project)** automatically creates HDD-OSD icons for display in Browser 2.0. However, icons can only be automatically created if sufficient assets are available in the OPL Manager Art Database. This icon generator allows you to create your own HDD-OSD icons by manually supplying the required images.
 
 **[Please contribute any icons that you create to the HDD-OSD Icon Database](#contributing-to-the-hdd-osd-icon-database).**
 
