@@ -34,7 +34,9 @@ s logo or splash screen:
 
 **NOTE:** The application logo should be square.
 
-Download the images and place them in the `HDD-OSD-Icon-Generator/image` folder. For games, the image filename's should be in the typical OPL format, the resolution and file format does not matter. For example a game with the title ID `SLPS_014.59` should look something like this:
+Download the images and place them in the `HDD-OSD-Icon-Generator/image` folder.
+
+For games, the image filename's should be in the typical OPL format, the resolution and file format does not matter. For example a game with the title ID `SLPS_014.59` should look something like this:
 - Front image - `SLPS_014.59_COV.bmp`
 - Back image - `SLPS_014.59_COV2.jpg`
 - Spine image - `SLPS_014.59_LAB.png`
