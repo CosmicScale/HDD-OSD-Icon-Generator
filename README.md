@@ -26,20 +26,21 @@ PS1 VMC memory card icons require one image of the game's logo:
 
 **NOTE:** The game logo should preferably be a `PNG` file with a transparent background. It will be resized to 300x125 so you should make sure the source image has the correct aspect ratio.
 
-Homebrew applications require one image of the apps logo or splash screen:
+Homebrew applications require one image of the app'
+s logo or splash screen:
 | Homebrew App |
 |------|
-|      |
+|<img width="128" height="128" alt="APP_WOPL" src="https://github.com/user-attachments/assets/7d0a67a8-3ce4-444c-8531-38c402629966" />|
 
 **NOTE:** The application logo should be square.
 
-Download the images and place them in the `HDD-OSD-Icon-Generator/image` folder. The image filename's should be in the typical OPL format, the resolution and file format does not matter. For example a game with the title ID `SLPS_014.59` should look something like this:
+Download the images and place them in the `HDD-OSD-Icon-Generator/image` folder. For games, the image filename's should be in the typical OPL format, the resolution and file format does not matter. For example a game with the title ID `SLPS_014.59` should look something like this:
 - Front image - `SLPS_014.59_COV.bmp`
 - Back image - `SLPS_014.59_COV2.jpg`
 - Spine image - `SLPS_014.59_LAB.png`
 - Game logo image - `SLPS_014.59_LGO.png`
 
-For homebrew applications, the image filename should be named after the app's title ID:
+For homebrew applications, the image filename should match the app’s title ID:
 - Homebrew app image - `APP_WOPL.png`
 
 ## Creating an Icon
