@@ -1,30 +1,37 @@
 #!/usr/bin/env bash
 
 # v3.0.0
-clear
-echo "=============== HDD-OSD Icon Generator ===============
-"
 
-menu="
-Type of icon to generate:
-1 - PS2 DVD NTSC case
-2 - PS2 DVD PAL case
-3 - PS1 CD USA case
-4 - PS1 CD USA Greatest Hits case
-5 - PS1 JPN case
-6 - PS1 PAL case
-7 - PS1 multi-disc case
-8 - PS1 virtual memory card
-"
+  template_path="./Icon-templates"
+  image_path="./image"
 
-template_path="./Icon-templates"
-image_path="./image"
+if [ "$#" -lt 2 ]; then
+  clear
+  echo "=============== HDD-OSD Icon Generator ===============
+  "
 
-read -rp "Enter game ID: " input
-echo "$menu"
-read -rp "Enter icon type (1-8) [default 1]: " type
-# Default to 1 if empty
-type=${type:-1}
+  menu="
+  Type of icon to generate:
+  1 - PS2 DVD NTSC case
+  2 - PS2 DVD PAL case
+  3 - PS1 CD USA case
+  4 - PS1 CD USA Greatest Hits case
+  5 - PS1 JPN case
+  6 - PS1 PAL case
+  7 - PS1 multi-disc case
+  8 - PS1 virtual memory card
+  9 - Homebrew Application
+  "
+
+  read -rp "Enter game ID: " input
+  echo "$menu"
+  read -rp "Enter icon type (1-9) [default 1]: " type
+  # Default to 1 if empty
+  type=${type:-1}
+else
+  type=$1
+  input=$2
+fi
 
 case $type in
   1)
@@ -58,6 +65,11 @@ case $type in
   8)
     icon="${template_path}/VMC.icn"
     template="${template_path}/VMC.png"
+    ;;
+  9)
+    icon="${template_path}/app.icn"
+    template="${template_path}/APP-LST.bmp"
+    template2="${template_path}/APP-DEL.bmp"
     ;;
   *)
     type="1"
@@ -105,33 +117,54 @@ elif [ "$type" -eq 8 ]; then
     \( "${image_path}/${input}_LGO."* -resize 300x125\! \) -geometry +169+283 -composite \
     "${image_path}/temp.png" > /dev/null 2>&1
     convert "${image_path}/temp.png" -resize 128x128 -rotate 180 "${image_path}/temp.bmp" > /dev/null 2>&1
+elif [ "$type" -eq 9 ]; then
+    convert $template \
+    \( "${image_path}/${input}.png" -resize 107x107\! \) -composite \
+    "${image_path}/temp.bmp" > /dev/null 2>&1
+    convert $template2 \
+    \( "${image_path}/${input}.png" -resize 107x107\! \) -composite \
+    "${image_path}/temp_del.bmp" > /dev/null 2>&1
 fi
 
-convert "${image_path}/temp.bmp" \
-  -flip \
-  -separate +channel \
-  -swap 0,2 \
-  -combine \
-  -alpha off \
-  -define bmp:format=bmp4 \
-  -define bmp:subtype=RGB555 \
-  "${image_path}/temp.bmp" > /dev/null 2>&1
+convert_to_tex() {
+  local bmp="$1"
+  local tex="$2"
 
-dd bs=1 if="${image_path}/temp.bmp" of="${image_path}/temp.tex" skip=138 count=32768 iflag=skip_bytes,count_bytes > /dev/null 2>&1 &&
+  convert "$bmp" \
+    -flip \
+    -separate +channel \
+    -swap 0,2 \
+    -combine \
+    -alpha off \
+    -define bmp:format=bmp4 \
+    -define bmp:subtype=RGB555 \
+    "$bmp" > /dev/null 2>&1
+
+  dd bs=1 if="$bmp" of="$tex" skip=138 count=32768 iflag=skip_bytes,count_bytes > /dev/null 2>&1
+}
+
+convert_to_tex \
+  "${image_path}/temp.bmp" \
+  "${image_path}/temp.tex"
 
 if [ "$type" -eq 8 ]; then
-  cat "$icon" "${image_path}/temp.tex" > "./icon/vmc/$input.ico"
+    cat "$icon" "${image_path}/temp.tex" > "./icon/vmc/$input.ico" || { rm -f "./icon/vmc/$input.ico"; failed=true; }
+elif [ "$type" -eq 9 ]; then
+    convert_to_tex "${image_path}/temp_del.bmp" "${image_path}/temp_del.tex"
+    cat "$icon" "${image_path}/temp.tex" > "./icon/app/${input}_LST.ico" || { rm -f "./icon/app/${input}_LST.ico"; failed=true; }
+    cat "$icon" "${image_path}/temp_del.tex" > "./icon/app/${input}_DEL.ico" || { rm -f "./icon/app/${input}_DEL.ico"; failed=true; }
 else
-  cat "$icon" "${image_path}/temp.tex" > "./icon/game/$input.ico"
+    cat "$icon" "${image_path}/temp.tex" > "./icon/game/$input.ico" || { rm -f "./icon/game/$input.ico"; failed=true; }
 fi
 
-if [ -s "./icon/game/$input.ico" ] || [ -s "./icon/vmc/$input.ico" ]; then
-  rm "${image_path}/temp.bmp" "${image_path}/temp.png" "${image_path}/temp.tex" > /dev/null 2>&1 &&
-  echo
-  echo "Icon created sucessfully!"
-  exit 0
-else
+rm "${image_path}/temp.bmp" "${image_path}/temp_del.bmp" "${image_path}/temp.png" "${image_path}/temp.tex" "${image_path}/temp_del.tex" > /dev/null 2>&1
+
+if [ "$failed" = "true" ]; then
   echo
   echo "Error: failed to create icon for $input."
   exit 1
+else
+  echo
+  echo "Icon created sucessfully!"
+  exit 0
 fi

@@ -26,11 +26,21 @@ PS1 VMC memory card icons require one image of the game's logo:
 
 **NOTE:** The game logo should preferably be a `PNG` file with a transparent background. It will be resized to 300x125 so you should make sure the source image has the correct aspect ratio.
 
+Homebrew applications require one image of the apps logo or splash screen:
+| Homebrew App |
+|------|
+|      |
+
+**NOTE:** The application logo should be square.
+
 Download the images and place them in the `HDD-OSD-Icon-Generator/image` folder. The image filename's should be in the typical OPL format, the resolution and file format does not matter. For example a game with the title ID `SLPS_014.59` should look something like this:
 - Front image - `SLPS_014.59_COV.bmp`
 - Back image - `SLPS_014.59_COV2.jpg`
 - Spine image - `SLPS_014.59_LAB.png`
 - Game logo image - `SLPS_014.59_LGO.png`
+
+For homebrew applications, the image filename should be named after the app's title ID:
+- Homebrew app image - `APP_WOPL.png`
 
 ## Creating an Icon
 Windows users should double click on `ps2iconmaker.bat`, while Linux users should run `ps2iconmaker.sh`.
@@ -46,20 +56,21 @@ Type of icon to generate:
 6 - PS1 PAL case
 7 - PS1 multi-disc case
 8 - PS1 virtual memory card
+9 - Homebrew Application
 
-Enter icon type (1-8) [default 1]:
+Enter icon type (1-9) [default 1]:
 ```
 Choose the appropriate icon type for your game by entering a number from the list.
 
-You will find your newly created game icons in `HDD-OSD-Icon-Generator/icon/game` and PS1 VMC icons in `HDD-OSD-Icon-Generator/icon/vmc`.
+You will find your newly created game icons in `HDD-OSD-Icon-Generator/icon/game`, PS1 VMC icons in `HDD-OSD-Icon-Generator/icon/vmc`, and homebrew app icons in `HDD-OSD-Icon-Generator/icon/app`.
 
 ## Using the Icons
-Game icons should be placed in the `PSBBN-Definitive-English-Patch/icons/ico` folder, VMC icons should be placed in the `PSBBN-Definitive-English-Patch/icons/ico/vmc` folder. Windows users can find these folders by opening a file explorer window, selecting `Linux` in the sidebar and navigating to `PSBBN/home/<username>`. The game installer will then use your newly created icons.
+Game and app icons should be placed in the `PSBBN-Definitive-English-Patch/icons/ico` folder, VMC icons should be placed in the `PSBBN-Definitive-English-Patch/icons/ico/vmc` folder. Windows users can find these folders by opening a file explorer window, selecting `Linux` in the sidebar and navigating to `PSBBN/home/<username>`. The game installer will then use your newly created icons.
 
 ## Contributing to the HDD-OSD Icon Database
 You are encouraged to contribute all icons created to the **[HDD-OSD Icon Database](https://github.com/CosmicScale/HDD-OSD-Icon-Database)** so they can be used by the community.
 
-1. When you have created some icons, compress both the `HDD-OSD-Icon-Generator/icon/game` and `HDD-OSD-Icon-Generator/icon/vmc` folders into a single `.ZIP` file.
+1. When you have created some icons, compress the `HDD-OSD-Icon-Generator/icon/game`, `HDD-OSD-Icon-Generator/icon/app`, and `HDD-OSD-Icon-Generator/icon/vmc` folders into a single `.ZIP` file.
 2. Create a new issue on the **[HDD-OSD Icon Database GitHub page](https://github.com/CosmicScale/HDD-OSD-Icon-Database/issues/new)** and attach the `.ZIP` file by dragging and dropping it to the text box.
 
 ## Credits
